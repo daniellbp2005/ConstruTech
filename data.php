@@ -8,14 +8,13 @@ $categoria = [
     'Ferramentas' => 'Ferramentas',
 ];
 
-
 $produtosBase = [
     [
 
         'id' => 1,
         'nome' => 'Cimento',
         'preco' => 15.99,
-        'descricao' => 'algo',
+        // 'descricao' => 'algo',
         'imagem' => 'img/cimento.jpg',
         'categoria' => 'Bruto',
         'qtd' => 1,
@@ -25,7 +24,7 @@ $produtosBase = [
         'id' => 2,
         'nome' => 'Areia',
         'preco' => 4.99,
-        'descricao' => "",
+        // 'descricao' => "",
         'imagem' => 'img/areia.webp',
         'categoria' => 'Bruto',
         'qtd' => 1,
@@ -35,17 +34,17 @@ $produtosBase = [
         'id' => 3,
         'nome' => 'Martelo',
         'preco' => 29.99,
-        'descricao' => "",
+        // 'descricao' => "",
         'imagem' => 'img/martelo.jpg',
         'categoria' => 'Ferramentas',
         'qtd' => 1,
-        'UniMed' => ''
+        'UniMed' => '-'
     ],
     [
         'id' => 4,
         'nome' => 'Piso de Cerâmico',
         'preco' => 24.99,
-        'descricao' => "",
+        // 'descricao' => "",
         'imagem' => 'img/piso.jpg',
         'categoria' => 'Acabamento',
         'qtd' => 1,
