@@ -25,11 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title><?= print $nomeLoja; ?></title>
+    <title><?php print $nomeLoja; ?></title>
 </head>
 
 <body>
-    <?=
+    <?php
     require_once 'partials/header.php'
     ?>
     <div class="conteinerCad">

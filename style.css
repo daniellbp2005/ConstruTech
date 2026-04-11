@@ -393,6 +393,17 @@ th {
     padding: 0.5rem;
     font-family: "Open sans", sans-serif;
 }
+td {
+    padding: 0.5rem;
+    font-family: "Open sans", sans-serif;
+}
+.centro {
+    padding: 0.5rem;
+    font-family: "Open sans", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 tfoot{
     width: 100%;
 }

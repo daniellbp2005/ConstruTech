@@ -30,16 +30,16 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title><?= print $nomeLoja; ?></title>
+    <title><?php print $nomeLoja; ?></title>
 </head>
 
 <body>
-    <?= 
+    <?php 
     require_once 'partials/header.php'
     ?>
     <div class="conteiner">
         <div class="row">
-            <?=
+            <?php
             print '
             <h2>Gerenciamento de Estoque</h2>
             <ul>

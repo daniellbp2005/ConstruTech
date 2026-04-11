@@ -17,16 +17,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
     // header('Location: produto.php?produtoadd=1');
     header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
-    
 }
 
-if(isset($_GET['acao'])){
-    $id = $_GET['id'] ?? '';
-    if($_GET['acao'] == 'add'){
-        $_SESSION['produtos'][$id]['qtd'] += 1;
-    }
-    if($_GET['acao'] == 'remove'){
-        unset($_SESSION['produtos'][$id]);
+if (isset($_GET['acao']) && isset($_GET['id'])) {
+    $idPega = $_GET['id'];
+    foreach ($_SESSION['produtos'] as $index => $item) {
+        if ($item['id'] == $idPega) {
+            if ($_GET['acao'] === 'add') {
+                $_SESSION['produtos'][$index]['qtd'] += 1;
+            }
+            if ($_GET['acao'] === 'remove') {
+                if ($_SESSION['produtos'][$index]['qtd'] > 1) {
+                    $_SESSION['produtos'][$index]['qtd'] -= 1;
+                } else {
+                    unset($_SESSION['produtos'][$index]);
+                    $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
+                }
+            }
+            break;
+        }
     }
 }
 $subTotal = 0;
@@ -39,11 +48,11 @@ $subTotal = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title><?= print $nomeLoja; ?></title>
+    <title><?php print $nomeLoja; ?></title>
 </head>
 
 <body>
-    <?= 
+    <?php
     require_once 'partials/header.php'
     ?>
     <div class="conteinerCad">
@@ -60,32 +69,45 @@ $subTotal = 0;
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                foreach($_SESSION['produtos'] as $mat){
+                <?php
+                $subTotal = 0;
+                foreach ($_SESSION['produtos'] as $mat) {
+                    $total = 0;
+
+                    $total = $mat['qtd'] * $mat['preco'];
+                    $subTotal += $total;
                     $unidade = $mat['UniMed'] ?? '-';
                     echo '
                     <tr>
-                    <th>'.$mat['id'].'</th>
-                    <th>'.$mat['nome'].'</th>
-                    <th>'.$mat['categoria'].'</th>
-                    <th>'.$mat['preco'].'</th>
-                    <th>
-                    <a href="?acao=remove&id=<?= $id ?>">-</a>
-                    '.$mat['qtd'].'
-                    <a href="?acao=add&id=<?= $id ?>">+</a>
-                    </th>
-                    <th>'.$unidade.'</th>
-                    <th>'.$subTotal.'</th>  
+                    <td>' . $mat['id'] . '</td>
+                    <td>' . $mat['nome'] . '</td>
+                    <td>' . $mat['categoria'] . '</td>
+                    <td>' . $mat['preco'] . '</td>
+                    <td class="centro">
+                    <a href="?acao=remove&id=' . $mat['id'] . '">-</a>
+                    ' . $mat['qtd'] . '
+                    <a href="?acao=add&id=' . $mat['id'] . '">+</a>
+                    </td>
+                    <td>' . $unidade . '</td>
+                    <td>' . $total . '</td>  
                     </tr>
                     ';
                 }
                 ?>
             </tbody>
-            
+            <tfoot>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Subtotal: </td>
+                <td><?php print $subTotal ?></td>
+            </tfoot>
         </table>
     </div>
     <footer>
-        
+
     </footer>
 </body>
 
