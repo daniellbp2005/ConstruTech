@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
     ];
-        header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
+    header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
 }
 
@@ -34,11 +34,20 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <title><?php print $nomeLoja; ?></title>
 </head>
-
 <body>
-    <?php 
+    <?php
     require_once 'partials/header.php'
     ?>
     <div class="conteiner">
@@ -83,9 +92,9 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
         </div>
     </div>
     <footer>
-        <?php 
-    require_once 'partials/footer.php'
-    ?>
+        <?php
+        require_once 'partials/footer.php'
+        ?>
     </footer>
 </body>
 
