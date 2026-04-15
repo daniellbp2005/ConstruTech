@@ -10,11 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'nome' => $_POST['nome'],
         'preco' => $_POST['preco'],
         'categoria' => $_POST['categoria'],
-        'qtd' => $_POST['qtd'],
+        'qtd' => 1,
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
-        'UniMed' => $_POST['UniMed']
+        'UniMed' => $_POST['UniMed'],
+        'estoque' => $_POST['estoque'],
     ];
-    header('Location: produto.php?produtoadd=1');
+        header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
+    exit;
 }
 
 if (isset($_GET['produtoadd']) && $_GET['produtoadd'] === '1') {
@@ -29,7 +31,9 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
     <title><?php print $nomeLoja; ?></title>
 </head>
 
@@ -79,7 +83,9 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
         </div>
     </div>
     <footer>
-
+        <?php 
+    require_once 'partials/footer.php'
+    ?>
     </footer>
 </body>
 

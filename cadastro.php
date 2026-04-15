@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'nome' => $_POST['nome'],
         'preco' => $_POST['preco'],
         'categoria' => $_POST['categoria'],
-        'qtd' => $_POST['qtd'],
+        'qtd' => 1,
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
-        'UniMed' => $_POST['UniMed']
+        'UniMed' => $_POST['UniMed'],
+        'estoque' => $_POST['estoque']
     ];
-    // header('Location: produto.php?produtoadd=1');
     exit;
 }
 ?>
@@ -24,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
     <title><?php print $nomeLoja; ?></title>
 </head>
 
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
                         </div>
                         <input type="text" name="nome" placeholder="Digite o Nome do Material" id="">
                         <input type="text" name="preco" placeholder="Digite o Preço Unitário" id="">
-                        <input type="text" name="qtd" placeholder="Digite a Descrição do Material" id="">
+                        <input type="text" name="estoque" placeholder="Digite a Quantidade Máxima" id="">
                         <select name="categoria" id="">
                             <option>Tipo Categoria</option>
                             <option value="Bruto">Bruto</option>
@@ -67,7 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         </div>
     </div>
     <footer>
-
+    <?php 
+    require_once 'partials/footer.php'
+    ?>
     </footer>
 </body>
 

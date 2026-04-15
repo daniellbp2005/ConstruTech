@@ -18,7 +18,8 @@ $produtosBase = [
         'imagem' => 'img/cimento.jpg',
         'categoria' => 'Bruto',
         'qtd' => 1,
-        'UniMed' => 'kg'
+        'UniMed' => 'kg',
+        'estoque' => 20
     ],
     [
         'id' => 2,
@@ -28,7 +29,8 @@ $produtosBase = [
         'imagem' => 'img/areia.webp',
         'categoria' => 'Bruto',
         'qtd' => 1,
-        'UniMed' => 'kg'
+        'UniMed' => 'kg',
+        'estoque' => 20
     ],
     [
         'id' => 3,
@@ -38,7 +40,8 @@ $produtosBase = [
         'imagem' => 'img/martelo.jpg',
         'categoria' => 'Ferramentas',
         'qtd' => 1,
-        'UniMed' => '-'
+        'UniMed' => '-',
+        'estoque' => 15
     ],
     [
         'id' => 4,
@@ -48,6 +51,7 @@ $produtosBase = [
         'imagem' => 'img/piso.jpg',
         'categoria' => 'Acabamento',
         'qtd' => 1,
-        'UniMed' => 'm2'
+        'UniMed' => 'm2',
+        'estoque' => 25
     ],
 ];
