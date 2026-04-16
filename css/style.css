@@ -1,3 +1,10 @@
+:root {
+    --cor-primaria: #F8F9FA;
+    --cor-acess: #28A745;
+    --cor-acao: #007BFF;
+    --cor-texto: #212529;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -17,7 +24,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at bottom, rgb(63, 95, 182), rgb(138, 76, 76), rgb(63, 95, 182));
+    background: radial-gradient(circle at center, #FF9E9E 0%, #94BBE9 100%);
     flex-direction: column;
 }
 
@@ -50,7 +57,7 @@ nav {
 
 .row ul li {
     flex-direction: row;
-    color: white;
+    color: var(--cor-primaria);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,9 +66,9 @@ nav {
     padding: 0.6rem 1.3rem;
     font-family: "Inter", sans-serif;
     font-size: clamp(0.8rem, 1vw, 1.2rem);
-    background-color: rgb(56, 52, 56);
-    border: 0.5px solid #000;
-    color: white;
+    background-color: var(--cor-acao);
+    border: 0.5px solid var(--cor-texto);
+    color: var(--cor-primaria);
     border-radius: 1.5rem;
     transition: transform .2s ease-in-out;
 }
@@ -71,14 +78,15 @@ nav {
     box-shadow: 1px 2px 1px #000;
 }
 
-.row ul li::before{
+.row ul li::before {
     content: "";
 }
 
-.row h2 {
+.row h3 {
     text-align: left;
     width: 100%;
     margin-left: 20px;
+    color: var(--cor-texto);
     font-family: "Montserrat", sans-serif;
     font-size: clamp(1.5rem, 2vw, 2.5rem);
 }
@@ -86,7 +94,7 @@ nav {
 .conteiner {
     display: flex;
     flex-direction: column;
-    background-color: #e9e1e162;
+    background-color: #e9dada;
     width: 70%;
     height: 100vh;
 }
@@ -132,9 +140,9 @@ nav {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 0.7 solid #000;
+    border: 1px solid #000;
     border-radius: 0.5rem;
-    background-color: #e6e6e6;
+    background-color: aliceblue;
     height: 330px;
     overflow: hidden;
     transition: transform .1s ease-in-out;
@@ -231,23 +239,20 @@ form {
     transition: transform .2s ease-in-out;
 }
 
-form:hover {
-    transform: translateY(-10px);
-    box-shadow: 2px 5px 7px 0px #851c85;
-}
-
 .lado-e {
     height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lado-e img {
-    width: 100%;
-    height: 100%;
+    width: 19rem;
+    height: 19rem;
     position: relative;
 }
 
 .lado-d {
-    background: radial-gradient(circle at bottom, rgb(64, 64, 105), rgb(3, 3, 61), rgb(53, 6, 53), rgb(0, 0, 0));
     height: auto;
     display: flex;
     justify-content: center;
@@ -264,7 +269,7 @@ form:hover {
 }
 
 .caixa-form p {
-    color: #fff;
+    color: var(--cor-texto);
     font-family: "Open sans", sans-serif;
     font-size: clamp(12px, 1vw, 15px);
     transition: transform .2s ease-in-out;
@@ -274,10 +279,16 @@ form:hover {
     font-weight: 600;
 }
 
-.form-intro h1 {
-    font-family: "Montserrat", sans-serif;
-    color: white;
+.titulo-form {
+    font-family: "Inter", sans-serif;
+    color: var(--cor-texto);
+    font-size: clamp(1.2rem, 1.8vw, 2.5rem);
     align-items: left;
+}
+
+.titulo-form span {
+    border: 1px;
+    border-bottom: 5px solid #28A745;
 }
 
 input {
@@ -285,12 +296,17 @@ input {
     padding: 0.6rem 0.5rem;
     border: none;
     border-radius: 1.5rem;
-    transition: transform .2s ease-in-out
+    transition: transform .2s ease-in-out;
+    outline: none;
+    /* Remove a borda de foco padrão */
+}
+
+input:hover {
+    transform: translateY(-3px);
 }
 
 input:focus {
-    transform: translateY(-5px);
-    box-shadow: 3px 5px 7px #851c85;
+    box-shadow: 3px 5px 7px var(--cor-acess);
 }
 
 .caixa-form button {
@@ -299,15 +315,15 @@ input:focus {
     border: none;
     border-radius: 1.5rem;
     transition: transform .2s ease-in-out;
-    background: radial-gradient(circle at bottom left, blue, black);
+    background-color: var(--cor-acao);
     color: white;
-    font-family: "Open sans", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(0.5rem, 2vw, 1rem);
 }
 
 .caixa-form button:hover {
     transform: translateY(-5px);
-    box-shadow: 3px 5px 7px #851c85;
+    box-shadow: 3px 5px 7px var(--cor-acess);
 }
 
 .form-linha {
@@ -337,11 +353,10 @@ input:focus {
     font-size: clamp(0.5rem, 1vw, 0.8rem);
 }
 
-.esquerda select {
+.alinhar select {
     border: none;
     border-radius: 1.5rem;
-    background: radial-gradient(circle at bottom left, #000, #851c85);
-    color: rgb(212, 250, 0);
+    color: var(--cor-texto);
     padding: 0.5rem;
     transition: transform .2s ease-in-out;
 }
@@ -369,28 +384,43 @@ option:checked {
     align-items: center;
     width: 50%;
     height: 80%;
-    background-color: #e9e1e162;
     border-radius: 1rem;
+    background: radial-gradient(circle at top left, #F8F9FA 15%, #cac8c8 100%);
+
 }
 
 .cadastroProd form {
-    width: 100%;
+    width: 110%;
     height: 100%;
+}
+
+.alinhar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.espaco a {
+    padding: 0rem 1rem;
 }
 
 table {
     width: 90%;
     height: auto;
-    border-radius: 1rem;
-    overflow: hidden;
+
 }
 
 thead {
-    background-color: #000;
+    background-color: var(--cor-texto);
     color: white;
 }
 
-tr {
+thead tr th {
+    padding: 0.8rem 0rem;
+}
+
+.tab-body {
     background-color: #e9e1e162;
     color: white;
     transition: transform .2s ease-in-out;
@@ -400,10 +430,12 @@ th {
     padding: 0.5rem;
     font-family: "Open sans", sans-serif;
 }
+
 td {
     padding: 0.5rem;
     font-family: "Open sans", sans-serif;
 }
+
 .centro {
     padding: 0.5rem;
     font-family: "Open sans", sans-serif;
@@ -411,6 +443,13 @@ td {
     justify-content: center;
     align-items: center;
 }
-tfoot{
+
+tfoot {
     width: 100%;
+}
+
+tfoot td {
+    color: var(--cor-texto);
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
 }

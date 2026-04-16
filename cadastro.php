@@ -38,28 +38,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         <div class=" cadastroProd">
             <form action="index.php" method="POST">
                 <div class="lado-e">
-                    <img src="img/cimento.jpg" alt="">
+                    <img src="img/image.png" alt="">
                 </div>
                 <div class="lado-d">
                     <div class="caixa-form">
                         <div class="form-intro">
-                            <h1>Faça seu Cadastro de Material</h1>
+                            <h1 class="titulo-form">Cadastro de Material <span> de Contrução</span></h1>
                         </div>
                         <input type="text" name="nome" placeholder="Digite o Nome do Material" id="">
                         <input type="text" name="preco" placeholder="Digite o Preço Unitário" id="">
                         <input type="text" name="estoque" placeholder="Digite a Quantidade Máxima" id="">
-                        <select name="categoria" id="">
-                            <option>Tipo Categoria</option>
-                            <option value="Bruto">Bruto</option>
-                            <option value="Ferramentas">Ferramentas</option>
-                            <option value="Acabamento">Acabamento</option>
-                        </select>
-                        <select name="UniMed" id="">
-                            <option>Tipo Medida</option>
-                            <option value="m2">m²</option>
-                            <option value="kg">kg</option>
-                            <option value="-">-</option>
-                        </select>
+                        <div class="alinhar">
+                            <select name="categoria" id="">
+                                <option>Tipo Categoria</option>
+                                <option value="Bruto">Bruto</option>
+                                <option value="Ferramentas">Ferramentas</option>
+                                <option value="Acabamento">Acabamento</option>
+                            </select>
+                            <select name="UniMed" id="">
+                                <option>Tipo Medida</option>
+                                <option value="m2">m²</option>
+                                <option value="kg">kg</option>
+                                <option value="-">-</option>
+                            </select>
+                        </div>
                         <input type="url" name="imagem" placeholder="Cole a URL da Imagem (ex: https://example.com/img.jpg)" id="">
                         <button id="btnEnviar" name="enviar" type="submit">Enviar</button>
                         <p class="text-form1" id="paragrafo">Preencha o Formulário</p>
@@ -69,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         </div>
     </div>
     <footer>
-    <?php 
-    require_once 'partials/footer.php'
-    ?>
+        <?php
+        require_once 'partials/footer.php'
+        ?>
     </footer>
 </body>
 

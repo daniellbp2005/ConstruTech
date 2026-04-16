@@ -108,12 +108,12 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                     $subTotal += $total;
                     $unidade = $mat['UniMed'] ?? '-';
                     echo '
-                    <tr>
+                    <tr class="tab-body">
                     <td class="centro">' . $mat['id'] . '</td>
                     <td>' . $mat['nome'] . '</td>
                     <td>' . $mat['categoria'] . '</td>
                     <td>' . $mat['preco'] . '</td>
-                    <td class="centro">
+                    <td class="centro espaco">
                     <a href="?acao=remove&id=' . $mat['id'] . '">-</a>
                     ' . $mat['qtd'] . '
                     <a href="?acao=add&id=' . $mat['id'] . '">+</a>
@@ -135,8 +135,8 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Subtotal: </td>
-                <td><?php print $subTotal ?></td>
+                <td class="fundo">Subtotal: </td>
+                <td class="fundo"><?php print $subTotal ?></td>
             </tfoot>
         </table>
     </div>

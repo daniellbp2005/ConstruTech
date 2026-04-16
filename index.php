@@ -31,7 +31,7 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,56 +46,26 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <title><?php print $nomeLoja; ?></title>
 </head>
+
 <body>
-    <?php
-    require_once 'partials/header.php'
-    ?>
+
     <div class="conteiner">
-        <div class="row">
-            <?php
-            print '
-            <h2>Gerenciamento de Estoque</h2>
-            <ul>
-                <li><a href="index.php">Todos</a></li>
-            ';
-            foreach ($categoria as $kcat => $catNome) {
-                print '<li><a href="index.php?categoria=' . $kcat . '">' . $catNome . '</a></li>';
-            }
-            print '</ul>'
-            ?>
-        </div>
-        <div class="paicard">
-            <?php
-            foreach ($_SESSION['produtos'] as $produto) {
-                if ($categoria_get == '' || $produto['categoria'] == $categoria_get) {
-                    echo '
-                    <div class="col">
-                            <div class="cima">
-                                <select name="" id="">
-                                    <option value=""> Mais</option>
-                                    <option value=""> Acessar</option>
-                                </select>
-                                <img src="' . $produto['imagem'] . '" alt="">
-                            </div>
-                            <div class="baixo">
-                                <a href="produto.php?id=' . $produto['id'] . '">
-                                
-                                    <!-- <button class="button-col">comprar</button> -->
-                                    <p class="preco">R$: ' . $produto['preco'] . '</p>
-                                </a>
-                            </div>
-                    </div>
-                    ';
-                }
-            }
-            ?>
-        </div>
+        <h1 class="titulo-login">Faça seu</h1>
+        <h1>Login</h1>
+        <form class="login-form">
+            <label for="email">Email:</label>
+            <input class="login" type="email" id="email" placeholder="Faça seu login...">
+            <label for="senha">Senha:</label>
+            <input class="login" type="password" id="senha" placeholder="Coloque sua senha">
+            <button id="btnLogin">Entrar</button>
+        </form>
+        <p class="inserir">Insira os dados</p>
+        <button id="idSolicitar">Solicitar Login</button>
     </div>
     <footer>
-        <?php
-        require_once 'partials/footer.php'
-        ?>
+
     </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>
