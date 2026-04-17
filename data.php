@@ -19,7 +19,8 @@ $produtosBase = [
         'categoria' => 'Bruto',
         'qtd' => 1,
         'UniMed' => 'kg',
-        'estoque' => 20
+        'estoque' => 20,
+        'estoqueInicial' => 20
     ],
     [
         'id' => 2,
@@ -30,7 +31,8 @@ $produtosBase = [
         'categoria' => 'Bruto',
         'qtd' => 1,
         'UniMed' => 'kg',
-        'estoque' => 20
+        'estoque' => 20,
+        'estoqueInicial' => 20
     ],
     [
         'id' => 3,
@@ -41,7 +43,8 @@ $produtosBase = [
         'categoria' => 'Ferramentas',
         'qtd' => 1,
         'UniMed' => '-',
-        'estoque' => 15
+        'estoque' => 15,
+        'estoqueInicial' => 20
     ],
     [
         'id' => 4,
@@ -52,6 +55,7 @@ $produtosBase = [
         'categoria' => 'Acabamento',
         'qtd' => 1,
         'UniMed' => 'm2',
-        'estoque' => 25
+        'estoque' => 25,
+        'estoqueInicial' => 20
     ],
 ];

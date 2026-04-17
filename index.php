@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
+        'estoqueInicial' => $_POST['estoque']
+
     ];
     header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
@@ -60,7 +62,7 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
             <button id="btnLogin">Entrar</button>
         </form>
         <p class="inserir">Insira os dados</p>
-        <button id="idSolicitar">Solicitar Login</button>
+        <button id="idSolicitar"><u>Solicitar Login</u></button>
     </div>
     <footer>
 

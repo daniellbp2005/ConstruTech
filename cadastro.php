@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'qtd' => 1,
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
         'UniMed' => $_POST['UniMed'],
-        'estoque' => $_POST['estoque']
+        'estoque' => $_POST['estoque'],
+        'estoqueInicial' => $_POST['estoque']
     ];
     exit;
 }
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
     ?>
     <div class="conteinerCad">
         <div class=" cadastroProd">
-            <form action="index.php" method="POST">
+            <form action="inventario.php" method="POST">
                 <div class="lado-e">
                     <img src="img/image.png" alt="">
                 </div>

@@ -3,7 +3,8 @@ const senhaInput = document.getElementById("senha");
 const nomeInput = document.getElementById("nome");
 const btnLogin = document.getElementById("btnLogin");
 const btnCadastro = document.getElementById("btnCadastro");
-const texto = document.querySelector(".inserir")
+const texto = document.querySelector(".inserir");
+const btnSolicitar = document.getElementById("idSolicitar");
 
 let dados = JSON.parse(localStorage.getItem("salvamento")) || [
     {
@@ -38,7 +39,7 @@ if (btnLogin) {
             texto.innerText = "Acesso Liberado";
             // document.cookie = "status_acesso=liberado; path=/; max-age=3600";
             // console.log(document.cookie);
-            
+
             window.location.href = 'inventario.php';
         } else if (email === "" || senha === "") {
             texto.style.color = "red";
@@ -48,6 +49,13 @@ if (btnLogin) {
             texto.innerText = "Acesso Negado";
         }
     })
+}
+
+if(btnSolicitar){
+    btnSolicitar.addEventListener("click", ()=>{
+    texto.style.color = "green";
+    texto.innerText = "Solicitação Feita, aguarde";
+})
 }
 if (btnCadastro) {
     btnCadastro.addEventListener("click", (event) => {

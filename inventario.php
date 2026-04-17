@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'qtd' =>  1,
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
         'UniMed' => $_POST['UniMed'],
-        'estoque' => $_POST['estoque']
+        'estoque' => $_POST['estoque'],
+        'estoqueInicial' => $_POST['estoque']
     ];
     header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
@@ -41,13 +42,56 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                     $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
                 }
             }
+            if ($_GET['acao'] === 'apagar') {
+                unset($_SESSION['produtos'][$index]);
+                $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
+                header('Location: ' . $_SERVER['PHP_SELF']);
+            }
+
+            if ($_GET['baixa'] === 'remove') {
+                $_SESSION['produtos'][$index]['estoque'] -= 1;
+            }
+            if ($_GET['baixa'] === 'add') {
+                $_SESSION['produtos'][$index]['estoque'] += 1;
+            }
+            $lmite = 4;
+            if ($item['estoque'] <= $limite) {
+                $_SESSION['produtos'][$index]['qtd'] += 10;
+                header('Location: ' . $_SERVER['PHP_SELF']);
+            }
             break;
         }
-        header('Location: ' . $_SERVER['PHP_SELF']);
     }
 }
+foreach ($_SESSION['produtos'] as $index => $item) {
+    $idPega = $_GET['id'] ?? "";
 
+    if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
+        if ($item['id'] == $idPega) {
+            if (isset($_GET['baixa']) && isset($_GET['id'])) {
+                if ($_GET['baixa'] === 'remove') {
+                    $_SESSION['produtos'][$index]['estoque'] -= 1;
+                }
+                if ($_GET['baixa'] === 'add' && $item['estoque'] < $item['estoqueInicial']) {
+                    $_SESSION['produtos'][$index]['estoque'] += 1;
+                } else {
+                    echo 'eerrrp';
+                }
+            }
 
+            if (isset($_GET['solicitar']) && isset($_GET['id'])) {
+                if ($_GET['solicitar'] === 'remove' && $item['estoque'] > $item['estoqueInicial']) {
+                    $_SESSION['produtos'][$index]['estoque'] -= 1;
+                }
+                if ($_GET['solicitar'] === 'add') {
+                    $_SESSION['produtos'][$index]['estoque'] += 1;
+                }
+            }
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            exit;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,31 +122,36 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                     <th>Estoque</th>
                     <th>Situação</th>
                     <th>Total:</th>
+                    <th>Remover</th>
+                    <th>Baixa</th>
+                    <th>Solicitar</th>
+                    <th>Efetuar</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $subTotal = 0;
+
                 foreach ($_SESSION['produtos'] as $mat) {
                     $total = 0;
+                    $subTotal = 0;
                     $limiteMinimo = 4;
                     $limiteMedio = 10;
-                    $limiteMaximo= $mat['estoque'];
+                    $limiteMaximo = $mat['estoque'];
                     $resultado = '';
-                    
+
                     if ($mat['qtd'] > $limiteMinimo) {
                         $resultado = 'MEDIO';
                     }
-                    if($mat['qtd'] > $limiteMedio){
+                    if ($mat['qtd'] > $limiteMedio) {
                         $resultado = 'FINAL';
                     }
-                    if($mat['qtd'] <= $limiteMinimo){
+                    if ($mat['qtd'] <= $limiteMinimo) {
                         $resultado = 'MUITO';
                     }
-                    if($mat['qtd'] == $mat['estoque']){
+                    if ($mat['qtd'] == $mat['estoque']) {
                         $resultado = "Acabou";
                     }
-                    
+
 
                     $total = $mat['qtd'] * $mat['preco'];
                     $subTotal += $total;
@@ -112,7 +161,7 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                     <td class="centro">' . $mat['id'] . '</td>
                     <td>' . $mat['nome'] . '</td>
                     <td>' . $mat['categoria'] . '</td>
-                    <td>' . $mat['preco'] . '</td>
+                    <td >' . $mat['preco'] . '</td>
                     <td class="centro espaco">
                     <a href="?acao=remove&id=' . $mat['id'] . '">-</a>
                     ' . $mat['qtd'] . '
@@ -120,14 +169,36 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                     </td>
                     <td>' . $unidade . '</td>
                     <td>' . $mat['estoque'] . '</td>
-                    <td>'.$resultado.'</td>
+                    <td>' . $resultado . '</td>
                     <td>' . $total . '</td>  
+                    <td class="centro"> 
+                    <a href="?acao=apagar&id=' . $mat['id'] . '"><img src="img/lixeira.png" alt="apagar tudo" class="remover"></a>
+                    </td>  
+                    <td class="">
+                    <a href="?baixa=remove&id=' . $mat['id'] . '">-</a>
+                    ' . $mat['qtd'] . '
+                    <a href="?baixa=add&id=' . $mat['id'] . '">+</a>
+                    </td>
+
+
+                    <td>
+                    <a href="?solicitar=remove&id=' . $mat['id'] . '">-</a>
+                    ' . $mat['qtd'] . '
+                    <a href="?solicitar=add&id=' . $mat['id'] . '">+</a>
+                    </td>
+
+
+                    <td class="centro">
+                    <a href="?efetuar=sim&id=' . $mat['id'] . '">✔</a>
+                    </td>
                     </tr>
                     ';
                 }
                 ?>
             </tbody>
+            <!--  -->
             <tfoot>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -137,6 +208,9 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
                 <td></td>
                 <td class="fundo">Subtotal: </td>
                 <td class="fundo"><?php print $subTotal ?></td>
+                <td class=""><?php print '0' ?></td>
+                <td class=""><?php print '0' ?></td>
+
             </tfoot>
         </table>
     </div>
@@ -145,11 +219,6 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
         require_once 'partials/footer.php'
         ?>
     </footer>
-    <script>
-        function alertaVisual() {
-            // const 
-        }
-    </script>
 </body>
 
 </html>

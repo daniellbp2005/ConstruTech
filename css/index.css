@@ -103,3 +103,14 @@ label {
     font-size: 17px;
     margin: 10px auto;
 }
+
+#idSolicitar{
+    background-color: transparent;
+    color: var(--cor-acao);
+    border: none;
+    transition: transform .2s ease-in-out;
+}
+
+#idSolicitar:hover {
+    color: #005ab9;
+}

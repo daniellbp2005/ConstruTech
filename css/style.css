@@ -3,6 +3,8 @@
     --cor-acess: #28A745;
     --cor-acao: #007BFF;
     --cor-texto: #212529;
+    --cor-danger: #dc3545;
+    --cor-alternativo: #d1d1d1;
 }
 
 * {
@@ -24,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at center, #FF9E9E 0%, #94BBE9 100%);
+    background-color: var(--cor-alternativo);
     flex-direction: column;
 }
 
@@ -422,7 +424,8 @@ thead tr th {
 
 .tab-body {
     background-color: #e9e1e162;
-    color: white;
+    color: var(--cor-texto);
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
     transition: transform .2s ease-in-out;
 }
 
@@ -442,6 +445,18 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.centralizar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.remover{
+    background-color: transparent;
+    width: 15px;
+    height: 18px;
 }
 
 tfoot {
