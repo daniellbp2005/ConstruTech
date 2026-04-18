@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
-        'estoqueInicial' => $_POST['estoque']
+        'estoqueInicial' => $_POST['estoque'],
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ];
     exit;
 }

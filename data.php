@@ -20,7 +20,9 @@ $produtosBase = [
         'qtd' => 1,
         'UniMed' => 'kg',
         'estoque' => 20,
-        'estoqueInicial' => 20
+        'estoqueInicial' => 20,
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ],
     [
         'id' => 2,
@@ -32,7 +34,9 @@ $produtosBase = [
         'qtd' => 1,
         'UniMed' => 'kg',
         'estoque' => 20,
-        'estoqueInicial' => 20
+        'estoqueInicial' => 20,
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ],
     [
         'id' => 3,
@@ -44,7 +48,9 @@ $produtosBase = [
         'qtd' => 1,
         'UniMed' => '-',
         'estoque' => 15,
-        'estoqueInicial' => 20
+        'estoqueInicial' => 20,
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ],
     [
         'id' => 4,
@@ -56,6 +62,8 @@ $produtosBase = [
         'qtd' => 1,
         'UniMed' => 'm2',
         'estoque' => 25,
-        'estoqueInicial' => 20
+        'estoqueInicial' => 20,
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ],
 ];

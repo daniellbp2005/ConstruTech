@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
-        'estoqueInicial' => $_POST['estoque']
+        'estoqueInicial' => $_POST['estoque'],
+        'valorBaixa' => 0,
+        'valorSolicitar' => 0,
     ];
     header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
@@ -49,10 +51,10 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
             }
 
             if ($_GET['baixa'] === 'remove') {
-                $_SESSION['produtos'][$index]['estoque'] -= 1;
+                $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
             }
             if ($_GET['baixa'] === 'add') {
-                $_SESSION['produtos'][$index]['estoque'] += 1;
+                $_SESSION['produtos'][$index]['valorBaixa'] += 1;
             }
             $lmite = 4;
             if ($item['estoque'] <= $limite) {
@@ -66,25 +68,37 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
 foreach ($_SESSION['produtos'] as $index => $item) {
     $idPega = $_GET['id'] ?? "";
 
-    if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
+    if (isset($_GET['baixa']) || isset($_GET['solicitar']) || isset($_GET['efetuar'])) {
         if ($item['id'] == $idPega) {
+
             if (isset($_GET['baixa']) && isset($_GET['id'])) {
                 if ($_GET['baixa'] === 'remove') {
-                    $_SESSION['produtos'][$index]['estoque'] -= 1;
+                    if ($_SESSION['produtos'][$index]['valorBaixa'] > 1) {
+                        $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
+                    }
                 }
-                if ($_GET['baixa'] === 'add' && $item['estoque'] < $item['estoqueInicial']) {
-                    $_SESSION['produtos'][$index]['estoque'] += 1;
-                } else {
-                    echo 'eerrrp';
+                if ($_GET['baixa'] === 'add') {
+                    $_SESSION['produtos'][$index]['valorBaixa'] += 1;
                 }
             }
 
             if (isset($_GET['solicitar']) && isset($_GET['id'])) {
-                if ($_GET['solicitar'] === 'remove' && $item['estoque'] > $item['estoqueInicial']) {
-                    $_SESSION['produtos'][$index]['estoque'] -= 1;
+                if ($_GET['solicitar'] === 'remove' && $_SESSION['produtos'][$index]['valorSolicitar'] > 0) {
+                    $_SESSION['produtos'][$index]['valorSolicitar'] -= 1;
                 }
                 if ($_GET['solicitar'] === 'add') {
-                    $_SESSION['produtos'][$index]['estoque'] += 1;
+                    $_SESSION['produtos'][$index]['valorSolicitar'] += 1;
+                }
+            }
+
+            if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
+                if ($item['valorBaixa'] > 0) {
+                    $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];        
+                    $_SESSION['produtos'][$index]['valorBaixa'] = 0;
+                }
+                if ($item['valorSolicitar'] > 0) {
+                    $_SESSION['produtos'][$index]['estoque'] += $item['valorSolicitar'];
+                    $_SESSION['produtos'][$index]['valorSolicitar'] = 0;
                 }
             }
             header('Location: ' . $_SERVER['PHP_SELF']);
@@ -117,23 +131,22 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <th>Nome</th>
                     <th>Categoria</th>
                     <th>Preço</th>
-                    <th>Quantidade</th>
                     <th>Unidade</th>
                     <th>Estoque</th>
                     <th>Situação</th>
                     <th>Total:</th>
-                    <th>Remover</th>
                     <th>Baixa</th>
                     <th>Solicitar</th>
                     <th>Efetuar</th>
+                    <th>Remover</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
+                $subTotal = 0;
 
                 foreach ($_SESSION['produtos'] as $mat) {
                     $total = 0;
-                    $subTotal = 0;
                     $limiteMinimo = 4;
                     $limiteMedio = 10;
                     $limiteMaximo = $mat['estoque'];
@@ -162,28 +175,22 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <td>' . $mat['nome'] . '</td>
                     <td>' . $mat['categoria'] . '</td>
                     <td >' . $mat['preco'] . '</td>
-                    <td class="centro espaco">
-                    <a href="?acao=remove&id=' . $mat['id'] . '">-</a>
-                    ' . $mat['qtd'] . '
-                    <a href="?acao=add&id=' . $mat['id'] . '">+</a>
-                    </td>
+                    
                     <td>' . $unidade . '</td>
                     <td>' . $mat['estoque'] . '</td>
                     <td>' . $resultado . '</td>
                     <td>' . $total . '</td>  
-                    <td class="centro"> 
-                    <a href="?acao=apagar&id=' . $mat['id'] . '"><img src="img/lixeira.png" alt="apagar tudo" class="remover"></a>
-                    </td>  
+                    
                     <td class="">
                     <a href="?baixa=remove&id=' . $mat['id'] . '">-</a>
-                    ' . $mat['qtd'] . '
+                    ' . $mat['valorBaixa'] . '
                     <a href="?baixa=add&id=' . $mat['id'] . '">+</a>
                     </td>
 
 
                     <td>
                     <a href="?solicitar=remove&id=' . $mat['id'] . '">-</a>
-                    ' . $mat['qtd'] . '
+                    ' . $mat['valorSolicitar'] . '
                     <a href="?solicitar=add&id=' . $mat['id'] . '">+</a>
                     </td>
 
@@ -191,6 +198,9 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <td class="centro">
                     <a href="?efetuar=sim&id=' . $mat['id'] . '">✔</a>
                     </td>
+                    <td class=""> 
+                    <a href="?acao=apagar&id=' . $mat['id'] . '"><img src="img/lixeira.png" alt="apagar tudo" class="remover"></a>
+                    </td>  
                     </tr>
                     ';
                 }
@@ -206,10 +216,11 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
                 <td class="fundo">Subtotal: </td>
                 <td class="fundo"><?php print $subTotal ?></td>
-                <td class=""><?php print '0' ?></td>
-                <td class=""><?php print '0' ?></td>
+       
 
             </tfoot>
         </table>
