@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
         'estoqueInicial' => $_POST['estoque'],
+        'estoqueMinimo' => 20,
+        'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
     ];
@@ -65,6 +67,7 @@ if (isset($_GET['acao']) && isset($_GET['id'])) {
         }
     }
 }
+
 foreach ($_SESSION['produtos'] as $index => $item) {
     $idPega = $_GET['id'] ?? "";
 
@@ -75,6 +78,8 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                 if ($_GET['baixa'] === 'remove') {
                     if ($_SESSION['produtos'][$index]['valorBaixa'] > 1) {
                         $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
+                    } else {
+                        echo "estoque insuficiente";
                     }
                 }
                 if ($_GET['baixa'] === 'add') {
@@ -93,7 +98,7 @@ foreach ($_SESSION['produtos'] as $index => $item) {
 
             if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
                 if ($item['valorBaixa'] > 0) {
-                    $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];        
+                    $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];
                     $_SESSION['produtos'][$index]['valorBaixa'] = 0;
                 }
                 if ($item['valorSolicitar'] > 0) {
@@ -130,10 +135,10 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <th>id</th>
                     <th>Nome</th>
                     <th>Categoria</th>
-                    <th>Preço</th>
                     <th>Unidade</th>
                     <th>Estoque</th>
                     <th>Situação</th>
+                    <th>Preço</th>
                     <th>Total:</th>
                     <th>Baixa</th>
                     <th>Solicitar</th>
@@ -147,26 +152,30 @@ foreach ($_SESSION['produtos'] as $index => $item) {
 
                 foreach ($_SESSION['produtos'] as $mat) {
                     $total = 0;
-                    $limiteMinimo = 4;
-                    $limiteMedio = 10;
+                    $limiteMinimo = 20;
+                    $limiteMedio = 55;
                     $limiteMaximo = $mat['estoque'];
                     $resultado = '';
 
-                    if ($mat['qtd'] > $limiteMinimo) {
-                        $resultado = 'MEDIO';
+                    if ($mat['estoque'] > $limiteMinimo) {
+                        $resultado = 'Quantidade média';
                     }
-                    if ($mat['qtd'] > $limiteMedio) {
-                        $resultado = 'FINAL';
+                    if ($mat['estoque'] > $limiteMedio) {
+                        $resultado = 'Bastante';
                     }
-                    if ($mat['qtd'] <= $limiteMinimo) {
-                        $resultado = 'MUITO';
-                    }
-                    if ($mat['qtd'] == $mat['estoque']) {
-                        $resultado = "Acabou";
+                    if ($mat['estoque'] <= $limiteMinimo) {
+                        $resultado = 'Bem pouco';
                     }
 
 
-                    $total = $mat['qtd'] * $mat['preco'];
+                    $aviso = "";
+                    if ($mat['estoque'] <= $mat['estoqueMinimo']) {
+                        $aviso =  'style="color:red; font-weight: bold"';
+                    } elseif ($mat['estoque'] <= $mat['estoqueMedio']) {
+                        $aviso =  'style="color:orange; font-weight: bold"';
+                    }
+
+                    $total = $mat['estoque'] * $mat['preco'];
                     $subTotal += $total;
                     $unidade = $mat['UniMed'] ?? '-';
                     echo '
@@ -174,32 +183,45 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <td class="centro">' . $mat['id'] . '</td>
                     <td>' . $mat['nome'] . '</td>
                     <td>' . $mat['categoria'] . '</td>
-                    <td >' . $mat['preco'] . '</td>
+                    
                     
                     <td>' . $unidade . '</td>
-                    <td>' . $mat['estoque'] . '</td>
+                    <td class="aviso" ' . $aviso . '> ' . $mat['estoque'] . '</td>
                     <td>' . $resultado . '</td>
+                    <td >' . $mat['preco'] . '</td>
                     <td>' . $total . '</td>  
                     
-                    <td class="">
-                    <a href="?baixa=remove&id=' . $mat['id'] . '">-</a>
-                    ' . $mat['valorBaixa'] . '
-                    <a href="?baixa=add&id=' . $mat['id'] . '">+</a>
+                    <td class="meio">
+                        <div>
+                            <div class="menos"><a href="?baixa=remove&id=' . $mat['id'] . '">-</a></div>
+                            ' . $mat['valorBaixa'] . '
+                            <div class="mais"> <a href="?baixa=add&id=' . $mat['id'] . '">+</a> </div>
+                        </div>
                     </td>
 
-
-                    <td>
-                    <a href="?solicitar=remove&id=' . $mat['id'] . '">-</a>
-                    ' . $mat['valorSolicitar'] . '
-                    <a href="?solicitar=add&id=' . $mat['id'] . '">+</a>
+                    <td class="meio">
+                        <div>
+                            <div class="menos"><a href="?solicitar=remove&id=' . $mat['id'] . '">-</a></div>
+                            ' . $mat['valorSolicitar'] . '
+                            <div class="mais"><a href="?solicitar=add&id=' . $mat['id'] . '">+</a></div>
+                        </div>
                     </td>
 
 
                     <td class="centro">
-                    <a href="?efetuar=sim&id=' . $mat['id'] . '">✔</a>
+                        <a href="?efetuar=sim&id=' . $mat['id'] . '">
+                            <div class="dois">
+                                ✔
+                            </div>
+                        </a>
                     </td>
-                    <td class=""> 
-                    <a href="?acao=apagar&id=' . $mat['id'] . '"><img src="img/lixeira.png" alt="apagar tudo" class="remover"></a>
+
+                    <td class="centro"> 
+                        <a href="?acao=apagar&id=' . $mat['id'] . '">
+                            <div>
+                                <img src="img/lixeira.png" alt="apagar tudo" class="remover">                        
+                            </div>
+                        </a>
                     </td>  
                     </tr>
                     ';
@@ -218,9 +240,11 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="fundo">Subtotal: </td>
-                <td class="fundo"><?php print $subTotal ?></td>
-       
+                <td></td>
+                <td></td>
+                <!-- <td class="">Subtotal: </td>
+                <td class=""><?php print $subTotal ?></td> -->
+
 
             </tfoot>
         </table>

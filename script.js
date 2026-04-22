@@ -21,9 +21,9 @@ let dados = JSON.parse(localStorage.getItem("salvamento")) || [
     },
     {
         id: 3,
-        nome: "diego",
+        nome: "admin",
         senha: "123",
-        email: "daniel.l.pires@aluno.senai.br",
+        email: "admin",
     },
 ];
 

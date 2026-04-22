@@ -1,6 +1,6 @@
 <header>
         <nav>
-            <p class="logo"><a href="#">ConstruTech</a></p>
+            <p class="logo"><a href="inventario.php">ConstruTech</a></p>
             <ul class="menu">
                 <li><a href="cadastro.php">Cadastro Produto</a></li>
                 <li><a href="inventario.php">Inventário</a></li>
