@@ -4,7 +4,6 @@
             <ul class="menu">
                 <li><a href="cadastro.php">Cadastro Produto</a></li>
                 <li><a href="inventario.php">Inventário</a></li>
-                <li><a href="solicitar.php">Solicitar</a></li>
                 <li><a href="index.php">Sair</a></li>
             </ul>
         </nav>

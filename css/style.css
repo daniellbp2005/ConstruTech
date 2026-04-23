@@ -5,6 +5,9 @@
     --cor-texto: #212529;
     --cor-danger: #dc3545;
     --cor-alternativo: #d1d1d1;
+    --cor-tabela-par: #ced4d8;
+    ;
+    --cor-tabela-impar: #fff;
 }
 
 * {
@@ -376,8 +379,41 @@ option:checked {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     height: 80vh;
+}
+
+.conteinerCad ul {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 15px;
+    flex-direction: row;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+.conteinerCad li {
+    width: auto;
+    height: auto;
+    padding: 0.3rem;
+    border: 2px solid var(--cor-texto);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition: transform .2s ease-in-out;
+    color: var(--cor-texto);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(0.6rem, 1vw, 1rem);
+}
+
+.conteinerCad li:hover {
+    color: var(--cor-acao);
+    border: 2px solid var(--cor-acao);
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .cadastroProd {
@@ -391,6 +427,10 @@ option:checked {
 
 }
 
+.alinhar {
+    margin: 0 auto;
+}
+
 .cadastroProd form {
     width: 110%;
     height: 100%;
@@ -401,6 +441,11 @@ option:checked {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    padding: 2px 0px;
+}
+
+.pad {
+    padding: 0px 6px
 }
 
 .espaco a {
@@ -410,7 +455,15 @@ option:checked {
 table {
     width: 90%;
     height: auto;
+    border-collapse: collapse;
+}
 
+tr:nth-child(even):not(.pular) {
+    background-color: var(--cor-tabela-par);
+}
+
+tr:nth-child(odd):not(.pular) {
+    background-color: var(--cor-tabela-impar);
 }
 
 thead {
@@ -499,7 +552,7 @@ td {
 
 .meio {
     margin: 0 auto;
- 
+
 }
 
 .centralizar {
@@ -521,7 +574,7 @@ td {
     height: 18px;
 }
 
-.aviso{
+.aviso {
     text-align: center;
 }
 

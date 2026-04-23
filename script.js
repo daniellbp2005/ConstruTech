@@ -8,23 +8,11 @@ const btnSolicitar = document.getElementById("idSolicitar");
 
 let dados = JSON.parse(localStorage.getItem("salvamento")) || [
     {
-        id: 1,
-        nome: "daniel",
-        senha: "123",
-        email: "daniel.l.pires@aluno.senai.br",
-    },
-    {
-        id: 2,
-        nome: "daniel",
-        senha: "123",
-        email: "daniellbp2005@gmail.com",
-    },
-    {
         id: 3,
         nome: "admin",
         senha: "123",
         email: "admin",
-    },
+    }
 ];
 
 if (btnLogin) {

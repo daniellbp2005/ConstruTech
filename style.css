@@ -348,6 +348,10 @@ option:checked {
     box-shadow: 3px 5px 7px #851c85;
 }
 
+.categoria{
+    display: flex;
+}
+
 .conteinerCad {
     display: flex;
     justify-content: center;

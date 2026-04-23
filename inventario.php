@@ -76,9 +76,9 @@ foreach ($_SESSION['produtos'] as $index => $item) {
 
             if (isset($_GET['baixa']) && isset($_GET['id'])) {
                 if ($_GET['baixa'] === 'remove') {
-                    if ($_SESSION['produtos'][$index]['valorBaixa'] > 1) {
+                    if ($_SESSION['produtos'][$index]['valorBaixa'] > 0) {
                         $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
-                    } else {
+                    }else {
                         echo "estoque insuficiente";
                     }
                 }
@@ -97,7 +97,7 @@ foreach ($_SESSION['produtos'] as $index => $item) {
             }
 
             if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
-                if ($item['valorBaixa'] > 0) {
+                if ($item['valorBaixa'] <= $item['estoque']) {
                     $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];
                     $_SESSION['produtos'][$index]['valorBaixa'] = 0;
                 }
@@ -129,9 +129,19 @@ foreach ($_SESSION['produtos'] as $index => $item) {
     require_once 'partials/header.php'
     ?>
     <div class="conteinerCad">
+
+        <ul class="categoria">
+            <li><a href="inventario.php">Todas</a></li>
+            <?php
+            foreach ($categoria as $kcat => $index) {
+                echo '<li><a href="inventario.php?categoria=' . $kcat . '">' . $index . '</a></li>';
+            }
+            ?>
+        </ul>
+
         <table>
             <thead>
-                <tr>
+                <tr class="pular">
                     <th>id</th>
                     <th>Nome</th>
                     <th>Categoria</th>
@@ -149,8 +159,9 @@ foreach ($_SESSION['produtos'] as $index => $item) {
             <tbody>
                 <?php
                 $subTotal = 0;
-
-                foreach ($_SESSION['produtos'] as $mat) {
+                $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
+                if (!empty($_SESSION['produtos'])) {
+                    foreach ($_SESSION['produtos'] as $mat) {
                     $total = 0;
                     $limiteMinimo = 20;
                     $limiteMedio = 55;
@@ -158,52 +169,57 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     $resultado = '';
 
                     if ($mat['estoque'] > $limiteMinimo) {
-                        $resultado = 'Quantidade média';
+                        $resultado = 'Médio';
                     }
                     if ($mat['estoque'] > $limiteMedio) {
-                        $resultado = 'Bastante';
+                        $resultado = 'Muito';
                     }
                     if ($mat['estoque'] <= $limiteMinimo) {
-                        $resultado = 'Bem pouco';
+                        $resultado = 'Pouco';
                     }
-
+                    if ($mat['estoque'] == 0){
+                        $resultado = "esgotado";
+                    }
 
                     $aviso = "";
                     if ($mat['estoque'] <= $mat['estoqueMinimo']) {
                         $aviso =  'style="color:red; font-weight: bold"';
                     } elseif ($mat['estoque'] <= $mat['estoqueMedio']) {
                         $aviso =  'style="color:orange; font-weight: bold"';
+                    } else {
+                        $aviso = 'style="color: green; font-weight: bold"';
                     }
 
                     $total = $mat['estoque'] * $mat['preco'];
                     $subTotal += $total;
                     $unidade = $mat['UniMed'] ?? '-';
-                    echo '
+
+                    if ($categoria_get == '' || $mat['categoria'] == $categoria_get) {
+                        echo '
                     <tr class="tab-body">
                     <td class="centro">' . $mat['id'] . '</td>
-                    <td>' . $mat['nome'] . '</td>
-                    <td>' . $mat['categoria'] . '</td>
+                    <td class="aviso">' . $mat['nome'] . '</td>
+                    <td class="aviso">' . $mat['categoria'] . '</td>
                     
-                    
-                    <td>' . $unidade . '</td>
+                    <td class="aviso">' . $unidade . '</td>
                     <td class="aviso" ' . $aviso . '> ' . $mat['estoque'] . '</td>
-                    <td>' . $resultado . '</td>
-                    <td >' . $mat['preco'] . '</td>
-                    <td>' . $total . '</td>  
+                    <td class="aviso">' . $resultado . '</td>
+                    <td class="aviso">' . $mat['preco'] . '</td>
+                    <td class="aviso">' . $total . '</td>  
                     
                     <td class="meio">
                         <div>
-                            <div class="menos"><a href="?baixa=remove&id=' . $mat['id'] . '">-</a></div>
+                            <div class="menos"><a href="?baixa=remove&id=' . $mat['id'] . '"><div class="pad">-</div></a></div>
                             ' . $mat['valorBaixa'] . '
-                            <div class="mais"> <a href="?baixa=add&id=' . $mat['id'] . '">+</a> </div>
+                            <div class="mais"> <a href="?baixa=add&id=' . $mat['id'] . '"><div class="pad">+</div></a></div>
                         </div>
                     </td>
 
                     <td class="meio">
                         <div>
-                            <div class="menos"><a href="?solicitar=remove&id=' . $mat['id'] . '">-</a></div>
+                            <div class="menos"><a href="?solicitar=remove&id=' . $mat['id'] . '"><div class="pad">-</div></a></div>
                             ' . $mat['valorSolicitar'] . '
-                            <div class="mais"><a href="?solicitar=add&id=' . $mat['id'] . '">+</a></div>
+                            <div class="mais"><a href="?solicitar=add&id=' . $mat['id'] . '"><div class="pad">+</div></a></div>
                         </div>
                     </td>
 
@@ -225,27 +241,31 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     </td>  
                     </tr>
                     ';
+                    }
                 }
+                }else{
+                    echo 'vazio';
+                }
+                
                 ?>
             </tbody>
             <!--  -->
             <tfoot>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <!-- <td class="">Subtotal: </td>
-                <td class=""><?php print $subTotal ?></td> -->
-
-
+                <tr class="pular">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="alinhar">Subtotal: </td>
+                    <td class="alinhar"><?php echo number_format($subTotal, 2, ',', '.') ?></td>
+                </tr>
             </tfoot>
         </table>
     </div>

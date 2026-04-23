@@ -1,54 +1,54 @@
 <footer>
     <div class="footer-cima">
-        <div class="foot ">
+        <div class="foot">
             <div class="titulo-foot">
-                Produtos
+                Estoque
             </div>
             <p>
-                Templetes de Imgs
+                Materiais Básicos
             </p>
             <p>
-                Design Inteligente
+                Ferramentas
             </p>
             <p>
-                Pagamentos
+                Acabamentos
             </p>
             <p>
-                E-mail Profissional
+                Elétrica e Hidráulica
             </p>
         </div>
         <div class="foot">
             <div class="titulo-foot">
-                Programas
+                Gerenciamento
             </div>
             <p>
-                Afiliados
+                Controle de Entrada
             </p>
             <p>
-                Estudantes
+                Baixa de Materiais
             </p>
             <p>
-                Socios
+                Relatórios de Vendas
             </p>
             <p>
-                Contato
+                Suporte Técnico
             </p>
         </div>
         <div class="foot">
             <div class="titulo-foot">
-                Empresa
+                ConstruTech
             </div>
             <p>
-                Sobre
+                Sobre Nós
             </p>
             <p>
-                Carreira
+                Nossas Unidades
             </p>
             <p>
-                Nossa História
+                Trabalhe Conosco
             </p>
             <p>
-                Nossa Empresa
+                Política de Privacidade
             </p>
         </div>
         <div class="foot">
@@ -59,34 +59,33 @@
                 Instagram
             </p>
             <p>
-                Youtube
+                YouTube
             </p>
             <p>
-                Linkendin
+                LinkedIn
             </p>
             <p>
                 Facebook
             </p>
         </div>
-
     </div>
     <div class="footer-baixo">
         <div class="linha"></div>
         <div class="copy">
-            <div class="foot-texto"> Todos os diretos reservados a ConstruTech ©.</div>
+            <div class="foot-texto"> Todos os direitos reservados a ConstruTech © 2026.</div>
         </div>
         <div class="galeria">
             <div class="foot-img">
-                <img src="img/zap_foto.png" alt="foto" draggable="false">
+                <img src="img/zap_foto.png" alt="WhatsApp" draggable="false">
             </div>
             <div class="foot-img">
-                <img src="img/X_foto.png" alt="foto" draggable="false">
+                <img src="img/X_foto.png" alt="X" draggable="false">
             </div>
             <div class="foot-img">
-                <img src="img/instagram_foto.png" alt="foto" draggable="false">
+                <img src="img/instagram_foto.png" alt="Instagram" draggable="false">
             </div>
             <div class="foot-img">
-                <img src="img/youtube_foto.png" alt="foto" draggable="false">
+                <img src="img/youtube_foto.png" alt="YouTube" draggable="false">
             </div>
         </div>
     </div>

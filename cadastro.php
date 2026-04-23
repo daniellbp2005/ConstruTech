@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
         'estoqueInicial' => $_POST['estoque'],
-        'estoqueMinimo' => 20,
+        'estoqueMinimo' => 20,      
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
