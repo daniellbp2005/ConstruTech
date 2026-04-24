@@ -35,4 +35,4 @@ https://github.com/daniellbp2005/ConstruTech
 ![Cadastro de Produto](img/trabalho2.png)
 
 ### Tela de Inventário
-![Inventário](img/trabalho1.png)
+![Inventário](img/trabalho.png)
