@@ -30,3 +30,9 @@ https://github.com/daniellbp2005/ConstruTech
 
 ### Tela de Login
 ![Login](img/trabalho3.png)
+
+### Tela de Cadstro de Produto
+![Cadastro de Produto](img/trabalho2.png)
+
+### Tela de Inventário
+![Inventário](img/trabalho1.png)
