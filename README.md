@@ -19,11 +19,11 @@ O sistema permite adicionar produtos no estoque, dar baixa e solicitar produtos,
 
 ## Como Rodar
 1. Clonar repositório
-2. Abra em um servidor local+++++
+2. Abra em um servidor local
 3. Coloque a pasta dentro do diretório do servidor
 4. Execute no navegardor:
 ```bash
-https://github.com/daniellbp2005/ConstruTech
+http://localhost/constru-tech
 ```
 
 ## Preview do Sistema
