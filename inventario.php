@@ -298,6 +298,7 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td class="alinhar">Subtotal: </td>
                     <td class="alinhar"><?php echo number_format($subTotal, 2, ',', '.') ?></td>
                 </tr>
