@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'preco' => $_POST['preco'],
         'categoria' => $_POST['categoria'],
         'qtd' =>  1,
-        'imagem' => $_POST['imagem'] ?? 'img/img_1.jpg',
+        'imagem' => $_POST['imagem'] ?? 'img/areia.webp',
         'UniMed' => $_POST['UniMed'],
         'estoque' => $_POST['estoque'],
         'estoqueInicial' => $_POST['estoque'],
