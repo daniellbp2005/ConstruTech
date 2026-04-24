@@ -1,6 +1,7 @@
 # Constru Tech
 
-Sistema de gerenciamento local vendas, nesse caso de uma loja de materiais de construção, no qual pode adicionar no estoque produtos e também dar baixa "produto vendido", depois de efetuar a ação, nesse sistema possui cadastro de produtos: nome, preço, categoria, imagem, entre outros, permitindo o dono ter total controle da loja e dos produtos.
+Sistema de gerenciamento local de produtos, de uma loja de materiais de construção.
+O sistema permite adicionar produtos no estoque, dar baixa e solicitar produtos, efetuar a ação, nesse sistema possui cadastro de produtos: nome, preço, categoria, imagem, entre outros, permite o dono ter total controle dos produtos.
 
 ## Tecnologias:
 - HTML
@@ -10,8 +11,22 @@ Sistema de gerenciamento local vendas, nesse caso de uma loja de materiais de co
 
 ## Funcionalidades:
 - Login do Responsável
-- CRUD de produtos
+- Adição de produtos
+- Visualização de produtos
+- Exclusão de produtos
+- Controle de estoque
+- Filtro por categoria
 
 ## Como Rodar
 1. Clonar repositório
-2. Rodar servidor local
+2. Abra em um servidor local+++++
+3. Coloque a pasta dentro do diretório do servidor
+4. Execute no navegardor:
+```bash
+https://github.com/daniellbp2005/ConstruTech
+```
+
+## Preview do Sistema
+
+### Tela de Login
+![Login](assets/img/trabalho3.png)
