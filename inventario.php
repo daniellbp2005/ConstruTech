@@ -1,6 +1,26 @@
 <?php
 require_once 'init.php';
 
+// Primeiro: verificar se é atualização de estoque (id_update)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['id_update'])) {
+    $id = $_GET['id_update'];
+    if (!empty($_POST['valor'])) {
+        $valorDigitado = $_POST['valor'];
+
+        foreach ($_SESSION['produtos'] as $index => $item) {
+            if ($item['id'] == $id) {
+                $_SESSION['produtos'][$index]['estoque'] += $valorDigitado;
+                break;
+            }
+        }
+    }else{
+        echo "vazio";
+    }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Segundo: criar novo produto (só executa se não for atualização)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como metodo POST, ele executa esse comando.
     $ids = array_column($_SESSION['produtos'], 'id');
     $novoId = $ids ? max($ids) + 1 : 1;
@@ -19,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => $_POST['valor']
     ];
     header('Location: ' . $_SERVER['PHP_SELF']); // Limpa a URL
     exit;
@@ -78,7 +99,7 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                 if ($_GET['baixa'] === 'remove') {
                     if ($_SESSION['produtos'][$index]['valorBaixa'] > 0) {
                         $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
-                    }else {
+                    } else {
                         echo "estoque insuficiente";
                     }
                 }
@@ -152,8 +173,10 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     <th>Total:</th>
                     <th>Baixa</th>
                     <th>Solicitar</th>
+                    <th>Inserir</th>
                     <th>Efetuar</th>
                     <th>Remover</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -162,40 +185,41 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                 $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
                 if (!empty($_SESSION['produtos'])) {
                     foreach ($_SESSION['produtos'] as $mat) {
-                    $total = 0;
-                    $limiteMinimo = 20;
-                    $limiteMedio = 55;
-                    $limiteMaximo = $mat['estoque'];
-                    $resultado = '';
+                        $total = 0;
+                        $limiteMinimo = 20;
+                        $limiteMedio = 55;
+                        $limiteMaximo = $mat['estoque'];
+                        $resultado = '';
 
-                    if ($mat['estoque'] > $limiteMinimo) {
-                        $resultado = 'Médio';
-                    }
-                    if ($mat['estoque'] > $limiteMedio) {
-                        $resultado = 'Muito';
-                    }
-                    if ($mat['estoque'] <= $limiteMinimo) {
-                        $resultado = 'Pouco';
-                    }
-                    if ($mat['estoque'] == 0){
-                        $resultado = "esgotado";
-                    }
+                        if ($mat['estoque'] > $limiteMinimo) {
+                            $resultado = 'Médio';
+                        }
+                        if ($mat['estoque'] > $limiteMedio) {
+                            $resultado = 'Muito';
+                        }
+                        if ($mat['estoque'] <= $limiteMinimo) {
+                            $resultado = 'Pouco';
+                        }
+                        if ($mat['estoque'] == 0) {
+                            $resultado = "esgotado";
+                        }
 
-                    $aviso = "";
-                    if ($mat['estoque'] <= $mat['estoqueMinimo']) {
-                        $aviso =  'style="color:red; font-weight: bold"';
-                    } elseif ($mat['estoque'] <= $mat['estoqueMedio']) {
-                        $aviso =  'style="color:orange; font-weight: bold"';
-                    } else {
-                        $aviso = 'style="color: green; font-weight: bold"';
-                    }
 
-                    $total = $mat['estoque'] * $mat['preco'];
-                    $subTotal += $total;
-                    $unidade = $mat['UniMed'] ?? '-';
+                        $aviso = "";
+                        if ($mat['estoque'] <= $mat['estoqueMinimo']) {
+                            $aviso =  'style="color:red; font-weight: bold"';
+                        } elseif ($mat['estoque'] <= $mat['estoqueMedio']) {
+                            $aviso =  'style="color:orange; font-weight: bold"';
+                        } else {
+                            $aviso = 'style="color: green; font-weight: bold"';
+                        }
 
-                    if ($categoria_get == '' || $mat['categoria'] == $categoria_get) {
-                        echo '
+                        $total = $mat['estoque'] * $mat['preco'];
+                        $subTotal += $total;
+                        $unidade = $mat['UniMed'] ?? '-';
+
+                        if ($categoria_get == '' || $mat['categoria'] == $categoria_get) {
+                            echo '
                     <tr class="tab-body">
                     <td class="centro">' . $mat['id'] . '</td>
                     <td class="aviso">' . $mat['nome'] . '</td>
@@ -223,6 +247,12 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                         </div>
                     </td>
 
+                     <td>
+                        <form-table action="?id_update=' . $mat['id'] . '" method="POST" style="display:flex;width:auto;flex-direction:column;justify-self:center">
+                            <input type="text" class="input-table" name="valor">
+                            <button class="btn-table" type="submit" name="atz_valor">Enviar</button>
+                        </form>
+                    </td>
 
                     <td class="centro">
                         <a href="?efetuar=sim&id=' . $mat['id'] . '">
@@ -241,12 +271,17 @@ foreach ($_SESSION['produtos'] as $index => $item) {
                     </td>  
                     </tr>
                     ';
+                        }
                     }
+                } else {
+                    echo '
+                    <tr>
+                        <td>
+                            Sem produtos Cadastrados
+                        </td>
+                    </tr>
+                    ';
                 }
-                }else{
-                    echo 'vazio';
-                }
-                
                 ?>
             </tbody>
             <!--  -->

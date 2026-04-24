@@ -578,6 +578,41 @@ td {
     text-align: center;
 }
 
+form-table {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.input-table{
+    width: 50px;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 1rem;
+    border: 0.5px solid var(--cor-texto);
+    display: flex;
+    justify-self: center;
+    transition: transform .2s ease-in-out;
+    outline: none;
+}
+
+
+.btn-table{
+    width: 50px;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--cor-acao);
+    color: var(--cor-primaria);
+    display: flex;
+    justify-self: center;
+    transition: transform .2s ease-in-out;
+    outline: none;
+}
+
+.btn-table:hover{
+    transform: translateY(-0.5px);
+}
 tfoot {
     width: 100%;
 }

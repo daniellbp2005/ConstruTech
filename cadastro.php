@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ];
     exit;
 }

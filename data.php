@@ -25,6 +25,7 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
     [
         'id' => 2,
@@ -41,6 +42,7 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
     [
         'id' => 3,
@@ -57,6 +59,7 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
     [
         'id' => 4,
@@ -73,6 +76,7 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
     [
         'id' => 5,
@@ -89,6 +93,7 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
     [
         'id' => 6,
@@ -105,5 +110,6 @@ $produtosBase = [
         'estoqueMedio' => 55,
         'valorBaixa' => 0,
         'valorSolicitar' => 0,
+        'valor' => 0
     ],
 ];
