@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['id_update'])) {
                 break;
             }
         }
-    }else{
+    } else {
         echo "vazio";
     }
     header('Location: ' . $_SERVER['PHP_SELF']);
@@ -45,90 +45,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //qnd a página for acessada como m
     exit;
 }
 
-if (isset($_GET['acao']) && isset($_GET['id'])) {
-    $idPega = $_GET['id'];
-    $erro = false;
-    // $limiteMaximo = 
-    foreach ($_SESSION['produtos'] as $index => $item) {
-        if ($item['id'] == $idPega) {
-            if ($_GET['acao'] === 'add') {
-                if ($item['qtd'] < $item['estoque']) {
-                    $_SESSION['produtos'][$index]['qtd'] += 1;
-                } else {
-                    $erro = true;
+if (!empty($_SESSION['produtos'])) {
+    if (isset($_GET['acao']) && isset($_GET['id'])) {
+        $idPega = $_GET['id'];
+        $erro = false;
+        // $limiteMaximo = 
+        foreach ($_SESSION['produtos'] as $index => $item) {
+            if ($item['id'] == $idPega) {
+                if ($_GET['acao'] === 'add') {
+                    if ($item['qtd'] < $item['estoque']) {
+                        $_SESSION['produtos'][$index]['qtd'] += 1;
+                    } else {
+                        $erro = true;
+                    }
                 }
-            }
-            // else if( $_GET['acao'] === 'add' && limite atingido), aq tem q delimitar a qtd maxima de produtos, tipo n permitir um valor maior que o estoque
-            if ($_GET['acao'] === 'remove') {
-                if ($_SESSION['produtos'][$index]['qtd'] > 1) {
-                    $_SESSION['produtos'][$index]['qtd'] -= 1;
-                } else {
+                // else if( $_GET['acao'] === 'add' && limite atingido), aq tem q delimitar a qtd maxima de produtos, tipo n permitir um valor maior que o estoque
+                if ($_GET['acao'] === 'remove') {
+                    if ($_SESSION['produtos'][$index]['qtd'] > 1) {
+                        $_SESSION['produtos'][$index]['qtd'] -= 1;
+                    } else {
+                        unset($_SESSION['produtos'][$index]);
+                        $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
+                    }
+                }
+                if ($_GET['acao'] === 'apagar') {
                     unset($_SESSION['produtos'][$index]);
                     $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
+                    header('Location: ' . $_SERVER['PHP_SELF']);
                 }
-            }
-            if ($_GET['acao'] === 'apagar') {
-                unset($_SESSION['produtos'][$index]);
-                $_SESSION['produtos'] = array_values($_SESSION['produtos']); // reorganiza o indice do arrray
-                header('Location: ' . $_SERVER['PHP_SELF']);
-            }
 
-            if ($_GET['baixa'] === 'remove') {
-                $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
-            }
-            if ($_GET['baixa'] === 'add') {
-                $_SESSION['produtos'][$index]['valorBaixa'] += 1;
-            }
-            $lmite = 4;
-            if ($item['estoque'] <= $limite) {
-                $_SESSION['produtos'][$index]['qtd'] += 10;
-                header('Location: ' . $_SERVER['PHP_SELF']);
-            }
-            break;
-        }
-    }
-}
-
-foreach ($_SESSION['produtos'] as $index => $item) {
-    $idPega = $_GET['id'] ?? "";
-
-    if (isset($_GET['baixa']) || isset($_GET['solicitar']) || isset($_GET['efetuar'])) {
-        if ($item['id'] == $idPega) {
-
-            if (isset($_GET['baixa']) && isset($_GET['id'])) {
                 if ($_GET['baixa'] === 'remove') {
-                    if ($_SESSION['produtos'][$index]['valorBaixa'] > 0) {
-                        $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
-                    } else {
-                        echo "estoque insuficiente";
-                    }
+                    $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
                 }
                 if ($_GET['baixa'] === 'add') {
                     $_SESSION['produtos'][$index]['valorBaixa'] += 1;
                 }
+                $lmite = 4;
+                if ($item['estoque'] <= $limite) {
+                    $_SESSION['produtos'][$index]['qtd'] += 10;
+                    header('Location: ' . $_SERVER['PHP_SELF']);
+                }
+                break;
             }
+        }
+    }
 
-            if (isset($_GET['solicitar']) && isset($_GET['id'])) {
-                if ($_GET['solicitar'] === 'remove' && $_SESSION['produtos'][$index]['valorSolicitar'] > 0) {
-                    $_SESSION['produtos'][$index]['valorSolicitar'] -= 1;
-                }
-                if ($_GET['solicitar'] === 'add') {
-                    $_SESSION['produtos'][$index]['valorSolicitar'] += 1;
-                }
-            }
+    if (!empty($_SESSION['produtos'])) {
+        foreach ($_SESSION['produtos'] as $index => $item) {
+            $idPega = $_GET['id'] ?? "";
 
-            if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
-                if ($item['valorBaixa'] <= $item['estoque']) {
-                    $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];
-                    $_SESSION['produtos'][$index]['valorBaixa'] = 0;
-                }
-                if ($item['valorSolicitar'] > 0) {
-                    $_SESSION['produtos'][$index]['estoque'] += $item['valorSolicitar'];
-                    $_SESSION['produtos'][$index]['valorSolicitar'] = 0;
+            if (isset($_GET['baixa']) || isset($_GET['solicitar']) || isset($_GET['efetuar'])) {
+                if ($item['id'] == $idPega) {
+
+                    if (isset($_GET['baixa']) && isset($_GET['id'])) {
+                        if ($_GET['baixa'] === 'remove') {
+                            if ($_SESSION['produtos'][$index]['valorBaixa'] > 0) {
+                                $_SESSION['produtos'][$index]['valorBaixa'] -= 1;
+                            } else {
+                                echo "estoque insuficiente";
+                            }
+                        }
+                        if ($_GET['baixa'] === 'add') {
+                            $_SESSION['produtos'][$index]['valorBaixa'] += 1;
+                        }
+                    }
+
+                    if (isset($_GET['solicitar']) && isset($_GET['id'])) {
+                        if ($_GET['solicitar'] === 'remove' && $_SESSION['produtos'][$index]['valorSolicitar'] > 0) {
+                            $_SESSION['produtos'][$index]['valorSolicitar'] -= 1;
+                        }
+                        if ($_GET['solicitar'] === 'add') {
+                            $_SESSION['produtos'][$index]['valorSolicitar'] += 1;
+                        }
+                    }
+
+                    if (isset($_GET['efetuar']) && $_GET['efetuar'] == 'sim') {
+                        if ($item['valorBaixa'] <= $item['estoque']) {
+                            $_SESSION['produtos'][$index]['estoque'] -= $item['valorBaixa'];
+                            $_SESSION['produtos'][$index]['valorBaixa'] = 0;
+                        }
+                        if ($item['valorSolicitar'] > 0) {
+                            $_SESSION['produtos'][$index]['estoque'] += $item['valorSolicitar'];
+                            $_SESSION['produtos'][$index]['valorSolicitar'] = 0;
+                        }
+                    }
+                    header('Location: ' . $_SERVER['PHP_SELF']);
+                    exit;
                 }
             }
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit;
         }
     }
 }
