@@ -29,4 +29,4 @@ https://github.com/daniellbp2005/ConstruTech
 ## Preview do Sistema
 
 ### Tela de Login
-![Login](assets/img/trabalho3.png)
+![Login](img/trabalho3.png)
